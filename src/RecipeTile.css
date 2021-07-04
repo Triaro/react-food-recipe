@@ -1,11 +1,23 @@
+
+.RecipeTile{
+    margin: 10px;
+    display: grid;
+    justify-content: center;
+}
 .recipeTile_img{
-    height:200px;
-    width: 200px;
+    height:100%;
+    width: 100%;
     object-fit: cover;
     border-radius: 4px;
 }
 .recipeTile_name{
-    max-width: 200px;
+    max-width: 100%;
     text-align: center;
-    margin: 12px 0px;
+    background-color: white;
+    font-size: 1em;
+}
+@media (max-width:630px){
+    .recipeTile_name{
+        font-size: .7em;
+    }
 }

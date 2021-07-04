@@ -5,10 +5,10 @@ import Axios from "axios";
 import RecipeTile from './RecipeTile';
 function App() {
   const [query, setquery] = useState("");
-
   const [recipes, setrecipes] = useState([]);
+  const [healthLabels, sethealthLabels] = useState("vegan");
+  const [isFirst, setIsFirst] = useState(true);
 
-  const [healthLabels, sethealthLabels] = useState("vegan")
   const YOUR_APP_ID = "3bfcb99b";
   const YOUR_APP_KEY = "59f2b5bf0c63d558f779b712ab18dc81";
   var url=`https://api.edamam.com/search?q=${query}&app_id=${YOUR_APP_ID}&app_key=${YOUR_APP_KEY}&health=${healthLabels}`  
@@ -23,10 +23,11 @@ function App() {
   }
   return (
     <div className="App">
-      <h1>Food Recipe Plaza</h1>
+      <img className="bgimg" src="https://media.istockphoto.com/photos/fresh-veggies-and-fruits-food-frame-on-white-background-with-copy-picture-id820334914?k=6&m=820334914&s=612x612&w=0&h=Blyz1bBLnEw0EtoPbKYYbfCh-r1JN28bAJ3RxO7vOKc=" alt="" />
+      <p className="heading">Food Recipe Plaza <img src="https://img.icons8.com/fluent/48/000000/hamburger.png"/> </p>
       <form className="searchForm" onSubmit={onSubmit}>
-          <input className="input" type="text" placeholder="Enter ingredient" value={query} onChange={(e)=> setquery(e.target.value)}/>
-          <input className="submit" type="submit" value="Search"/>
+          <input className="input" type="text" placeholder="Enter ingredient" value={query} onChange={(e)=>setquery(e.target.value)}/>
+          <input className="submit" type="submit" value="Search" onClick={()=>setIsFirst(false)}/>
           <select id="" className="healthLabel">
             <option value="vegan" onClick={()=>sethealthLabels("vegan")}>Vegan</option>
             <option value="vegetarian" onClick={()=>sethealthLabels("vegetarian")}>vegetarian</option>
@@ -42,13 +43,16 @@ function App() {
             <option value="shellfish-free" onClick={()=>sethealthLabels("shellfish-free")}>shellfish-free</option>
           </select>
       </form>
-
-      <div className="recipes">
-        {recipes.map(recipe =>{
+      
+       {isFirst && <p className="default">Your Recipe List Will Be Shown Here.</p>}
+       <div className="recipes">
+        {!isFirst && recipes.map(recipe =>{
           return <RecipeTile recipe={recipe}/>
-        })}
-      </div>
-    </div>
+        })
+        }</div>
+        
+      </div> 
+       
   );
 }
 
